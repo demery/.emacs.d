@@ -1,0 +1,4 @@
+# pack-refs with: peeled 
+f6f36a86fe2639b438488477437a921dc26c89ea refs/remotes/origin/master
+2608d8d9e6e12f88588248b39e26f890df0dd649 refs/remotes/origin/make-comint-windows
+c29431d209fcefa88accebdd452294aefaaf8089 refs/remotes/origin/camping

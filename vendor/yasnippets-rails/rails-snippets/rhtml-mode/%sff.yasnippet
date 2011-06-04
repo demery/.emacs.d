@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: <% semantic_form_for @"..." do |f| %><%- render 'form', :f => f %><%= f.buttons %><% end %>
+# group: rhtml
+# --
+<% semantic_form_for @${model} do |f| -%>
+  <%= render 'form', :f => f %>
+  <%= f.buttons %>
+<% end -%>$0

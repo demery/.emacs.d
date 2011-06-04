@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: def mock_"..."(stubs={}) "..." end
+# --
+def mock_${1:model}(stubs={})
+    @mock_$1 = mock_model($1,stubs)$0
+end

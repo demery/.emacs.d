@@ -1,0 +1,9 @@
+;; -*- emacs-lisp -*-
+;; Tramp connection history.  Don't change this file.
+;; You can delete it, forcing Tramp to reapply the checks.
+
+((["scpc" "doug" "thump4.sql1.isc.org" nil]
+  ("uname" "SunOS 5.10")
+  ("test" "test")
+  ("remote-path"
+   ("/usr/xpg4/bin" "/usr/ccs/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin"))))
