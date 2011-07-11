@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: <% if @imaging_object.errors.any? %>>" ... "<% end %>
+# group: rhtml
+# --
+<% if @${1:object}.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@$1.errors.count, "error") %> prohibited this $1 from being saved:</h2>
+    <ul>
+      <% @$1.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

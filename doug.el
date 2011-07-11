@@ -129,7 +129,6 @@ the mode-line."
 
 (global-set-key (kbd "<s-S-return>") 'maximize-frame)
 
-
 ;; open multiple marked files in dired
 (eval-after-load "dired"
   '(progn

@@ -1,0 +1,46 @@
+# -*- mode: snippet -*-
+# name: desc "Model" do "..." end
+# --
+describe ${1:ClassName} do
+  def valid_attributes
+    @valid_attributes ||= {
+      :name => "name"$0
+    }
+  end
+
+  context "(initilization)" do
+    it "is valid" do
+      $1.new(valid_attributes).should be_valid
+    end
+
+    it "creates a $1" do
+      $1.create!(valid_attributes).should be_a($1)
+    end
+
+    it "has a factory" do
+      Factory(:${2:class_names}).should be_a($1)
+    end
+  end
+
+  context "(attributes)" do
+    it "has a name" do
+      $1.new(:name => (name = "name")).name.should eq(name)
+    end
+  end 
+
+  context "(validations)" do
+    it "requires a name" do
+      $1.new.should have(1).error_on(:name)
+    end
+
+    it "requires a name be unique" do
+      $1.create!(valid_attributes)
+      $1.new(valid_attributes).should have(1).error_on(:name)
+    end
+
+  end
+
+  context "(methods)" do
+  end
+end
+

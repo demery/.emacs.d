@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: it "requires a "..."" do "..." end
+# --
+it "requires a ${1:attribute}" do
+  ${2:ClassName}.new(:$1 => nil).should have(1).error_on(:$1)
+end$0
