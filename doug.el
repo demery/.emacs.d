@@ -145,3 +145,12 @@ the mode-line."
           ispell-silently-savep t)))
 (setq-default ispell-program-name "aspell")
 
+(if (eq system-type 'darwin)
+    (setq exec-path
+          (append 
+           '("/usr/local/bin")
+           exec-path)))
+
+;; COFFEE-MODE
+(add-to-list 'load-path "~/.emacs.d/vendor/coffee-mode")
+(require 'coffee-mode)
