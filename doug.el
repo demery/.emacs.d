@@ -139,10 +139,12 @@ the mode-line."
        (let* ((fn-list (dired-get-marked-files nil arg)))
          (mapc 'find-file fn-list)))))
 
-(eval-after-load "ispell"
-  (progn
-    (setq ispell-dictionary "en"
-          ispell-silently-savep t)))
+;; (eval-after-load "ispell"
+;;   (progn
+;;     (setq ispell-dictionary "en_US"
+;;           ispell-silently-savep t)))
+;; (setq-default ispell-program-name "aspell")
+
 (setq-default ispell-program-name "aspell")
 
 (if (eq system-type 'darwin)
@@ -154,3 +156,12 @@ the mode-line."
 ;; COFFEE-MODE
 (add-to-list 'load-path "~/.emacs.d/vendor/coffee-mode")
 (require 'coffee-mode)
+
+
+;; ORG MODE
+;; The following lines are always needed.  Choose your own keys.
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+; (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
