@@ -6,7 +6,8 @@
 (setq ns-pop-up-frames nil)
 
 ;; Font
-(set-face-font 'default "-apple-monaco-medium-r-normal--11-0-72-72-m-0-iso10646-1")
+(set-face-font 'default "-apple-menlo-medium-r-normal--11-0-72-72-m-0-iso10646-1")
+
 
 ;; Color Themes
 (add-to-list 'load-path (concat vendor-dir "/color-theme"))

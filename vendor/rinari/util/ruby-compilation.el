@@ -3,11 +3,11 @@
 ;; Copyright (C) 2008 Eric Schulte
 
 ;; Author: Eric Schulte
-;; URL: http://www.emacswiki.org/cgi-bin/emacs/ruby-compilation.el
-;; Version: 0.7
+;; URL: https://github.com/eschulte/rinari
+;; Version: 0.8
 ;; Created: 2008-08-23
 ;; Keywords: test convenience
-;; Package-Requires: ((ruby-mode "1.1") (inf-ruby "2.1"))
+;; Package-Requires: ((ruby-mode "1.1") (inf-ruby "2.2.1"))
 
 ;;; License:
 
@@ -108,10 +108,12 @@ exec-to-string command, but it works and seems fast"
 		     (split-string (shell-command-to-string "cap -T") "[\n]"))))
 
 ;;;###autoload
-(defun ruby-compilation-run (cmd &optional ruby-options)
-  "Run a ruby process dumping output to a ruby compilation buffer."
+(defun ruby-compilation-run (cmd &optional ruby-options name)
+  "Run a ruby process dumping output to a ruby compilation
+buffer. If supplied, `name' will be used in place of the script
+name to construct the name of the compilation buffer."
   (interactive "FRuby Comand: ")
-  (let ((name (file-name-nondirectory (car (split-string cmd))))
+  (let ((name (or name (file-name-nondirectory (car (split-string cmd)))))
 	(cmdlist (append (list ruby-compilation-executable)
                          ruby-options
                          (split-string (expand-file-name cmd)))))
@@ -211,26 +213,23 @@ exec-to-string command, but it works and seems fast"
       (cadr (split-string this-test "#")))))
 
 (defun ruby-compilation-do (name cmdlist)
-  (let ((comp-buffer-name (format "*%s*" name)))
-    (unless (comint-check-proc comp-buffer-name)
-      ;; (if (get-buffer comp-buffer-name) (kill-buffer comp-buffer-name)) ;; actually rather keep
-      (let* ((buffer (apply 'make-comint name (car cmdlist) nil (cdr cmdlist)))
-	     (proc (get-buffer-process buffer)))
-	(save-excursion
-	  (set-buffer buffer) ;; set buffer local variables and process ornaments
-          (buffer-disable-undo)
-	  (set-process-sentinel proc 'ruby-compilation-sentinel)
-	  (set-process-filter proc 'ruby-compilation-insertion-filter)
-	  (set (make-local-variable 'compilation-error-regexp-alist)
-	       ruby-compilation-error-regexp-alist)
-	  (set (make-local-variable 'kill-buffer-hook)
-	       (lambda ()
-		 (let ((orphan-proc (get-buffer-process (buffer-name))))
-		   (if orphan-proc
-		       (kill-process orphan-proc)))))
-	  (compilation-minor-mode t)
-	  (ruby-compilation-minor-mode t))))
-    comp-buffer-name))
+  (let* ((buffer (apply 'make-comint name (car cmdlist) nil (cdr cmdlist)))
+         (proc (get-buffer-process buffer)))
+    (save-excursion
+      (set-buffer buffer) ;; set buffer local variables and process ornaments
+      (buffer-disable-undo)
+      (set-process-sentinel proc 'ruby-compilation-sentinel)
+      (set-process-filter proc 'ruby-compilation-insertion-filter)
+      (set (make-local-variable 'compilation-error-regexp-alist)
+           ruby-compilation-error-regexp-alist)
+      (set (make-local-variable 'kill-buffer-hook)
+           (lambda ()
+             (let ((orphan-proc (get-buffer-process (buffer-name))))
+               (if orphan-proc
+                   (kill-process orphan-proc)))))
+      (compilation-minor-mode t)
+      (ruby-compilation-minor-mode t)
+      (buffer-name))))
 
 (defun ruby-compilation-insertion-filter (proc string)
   "Insert text to buffer stripping ansi color codes"

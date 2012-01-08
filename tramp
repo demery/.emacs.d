@@ -6,4 +6,6 @@
   ("uname" "SunOS 5.10")
   ("test" "test")
   ("remote-path"
-   ("/usr/xpg4/bin" "/usr/ccs/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin"))))
+   ("/usr/xpg4/bin" "/usr/ccs/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin")))
+ (["scpc" "git" "192.168.1.2" nil]
+  nil))
