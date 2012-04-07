@@ -148,6 +148,13 @@ the mode-line."
 
 (setq-default ispell-program-name "aspell")
 
+(setenv "PATH"
+        (concat (getenv "PATH")
+                ":/usr/local/bin"))
+
+(setenv "NODE_NO_READLINE"
+        (concat "1"))
+
 (if (eq system-type 'darwin)
     (setq exec-path
           (append 
@@ -158,6 +165,25 @@ the mode-line."
 (add-to-list 'load-path "~/.emacs.d/vendor/coffee-mode")
 (require 'coffee-mode)
 
+(defun coffee-custom ()
+  "coffee-mode-hook"
+
+  ;; CoffeeScript uses two spaces.
+  (make-local-variable 'tab-width)
+  (set 'tab-width 2)
+
+  ;; *Messages* spam
+  (setq coffee-debug-mode t)
+
+  ;; Emacs key binding
+  (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
+
+  ;; Compile '.coffee' files on every save
+  (and (file-exists-p (buffer-file-name))
+       (file-exists-p (coffee-compiled-file-name))
+       (coffee-cos-mode t)))
+
+(add-hook 'coffee-mode-hook 'coffee-custom)
 
 ;; ORG MODE
 ;; The following lines are always needed.  Choose your own keys.
@@ -166,3 +192,7 @@ the mode-line."
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+
+
+;; SASS MODE
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode))

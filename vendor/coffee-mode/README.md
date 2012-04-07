@@ -163,6 +163,11 @@ Operating on "basic.coffee" and running this command will save a
 "basic.js" in the same directory. Subsequent runs will overwrite the
 file.
 
+If there are compilation errors and we the compiler have returned a
+line number to us for the first error, the point is moved to that
+line, so you can investigate.  If this annoys you, you can set
+`coffee-compile-jump-to-error` to `nil`.
+
 ### coffee-compile-buffer
 
 Compiles the current buffer to JavaScript using the command specified
@@ -211,7 +216,8 @@ Naturally. Example:
       "coffee-mode-hook"
 
       ;; CoffeeScript uses two spaces.
-      (set (make-local-variable 'tab-width) 2)
+      (make-local-variable 'tab-width)
+      (set 'tab-width 2)
 
       ;; If you don't have js2-mode
       (setq coffee-js-mode 'javascript-mode)
@@ -226,14 +232,14 @@ Naturally. Example:
       (define-key coffee-mode-map [(meta r)] 'coffee-compile-buffer)
 
       ;; Riding edge.
-      (setq coffee-command "~/dev/coffee"))
+      (setq coffee-command "~/dev/coffee")
 
       ;; Compile '.coffee' files on every save
       (and (file-exists-p (buffer-file-name))
            (file-exists-p (coffee-compiled-file-name))
-           (coffee-cos-mode t))))
+           (coffee-cos-mode t)))
 
-    (add-hook 'coffee-mode-hook 'coffee-custom))
+    (add-hook 'coffee-mode-hook 'coffee-custom)
 
 ## Configuration
 
@@ -292,6 +298,15 @@ Default: `'("-c")`
 The name of the scratch buffer used when compiling CoffeeScript.
 
 Default: `"*coffee-compiled*"`
+
+### coffee-compile-jump-to-error
+
+Whether to jump to the first error if compilation fails.  Please note
+that the coffee compiler doesn't always give a line number for the
+issue and in that case it is not possible to jump to the error, of
+course.
+
+Default: `t`
 
 ## Thanks
 
