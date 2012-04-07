@@ -8,7 +8,10 @@ describe ${1:ClassName} do
     }
   end
 
-  context "(initilization)" do
+  # ------------------------------------------------------------
+  # initialization
+  # ------------------------------------------------------------
+  context "(initialization)" do
     it "is valid" do
       $1.new(valid_attributes).should be_valid
     end
@@ -20,14 +23,20 @@ describe ${1:ClassName} do
     it "has a factory" do
       Factory(:${2:class_names}).should be_a($1)
     end
-  end
+  end # context "(initialization)"
 
+  # ------------------------------------------------------------
+  # attributes
+  # ------------------------------------------------------------
   context "(attributes)" do
     it "has a name" do
       $1.new(:name => (name = "name")).name.should eq(name)
     end
-  end 
+  end # context "(attributes)"
 
+  # ------------------------------------------------------------
+  # validations
+  # ------------------------------------------------------------
   context "(validations)" do
     it "requires a name" do
       $1.new.should have(1).error_on(:name)
@@ -38,9 +47,12 @@ describe ${1:ClassName} do
       $1.new(valid_attributes).should have(1).error_on(:name)
     end
 
-  end
+  end # context "(validations)"
 
+  # ------------------------------------------------------------
+  # methods
+  # ------------------------------------------------------------
   context "(methods)" do
-  end
+  end # context "(methods)"
 end
 
